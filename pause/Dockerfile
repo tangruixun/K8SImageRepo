@@ -1,1 +1,1 @@
-FROM k8s.gcr.io/pause:latest
+FROM registry.k8s.io/pause:latest
