@@ -1,4 +1,4 @@
-name: Pause-Packages
+name: Pause-Amd64-Packages
   
 on:
   schedule:
@@ -19,7 +19,7 @@ jobs:
       fail-fast: false
       matrix:
         include:  
-          - podname: pause
+          - podname: pause-amd64
             version: latest
     steps:
       - uses: actions/checkout@v3
