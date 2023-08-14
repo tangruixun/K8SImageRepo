@@ -1,0 +1,1 @@
+FROM registry.k8s.io/metrics-server/metrics-server:latest

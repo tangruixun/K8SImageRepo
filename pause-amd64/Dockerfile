@@ -1,0 +1,1 @@
+FROM registry.k8s.io/pause-amd64:latest
