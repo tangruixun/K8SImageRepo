@@ -29,10 +29,8 @@ jobs:
           curl -Ls "https://sbom.k8s.io/$(curl -Ls https://dl.k8s.io/release/stable.txt)/release" | grep "SPDXID: SPDXRef-Package-registry.k8s.io" |  grep -v sha256 | cut -d- -f3- | sed 's/-/\//' | sed 's/-v1/:v1/' > file.txt
           cat file.txt | while IFS= read -r line; do
             # Do something with each line                                                                                                                                                                     
-            string = $line
-           
-            name=$(echo "$string" | awk -F'[/:]' '{print $2}')
-            version=$(echo "$string" | awk -F':' '{print $NF}')
+            name=$(echo "$line" | awk -F'[/:]' '{print $2}')
+            version=$(echo "$line" | awk -F':' '{print $NF}')
 
             echo "Name: $name"
             echo "Version: $version"
