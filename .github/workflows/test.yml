@@ -30,26 +30,4 @@ jobs:
       - name: Run a multi-line script
         run: |
           curl -Ls "https://sbom.k8s.io/$(curl -Ls https://dl.k8s.io/release/stable.txt)/release" | grep "SPDXID: SPDXRef-Package-registry.k8s.io" |  grep -v sha256 | cut -d- -f3- | sed 's/-/\//' | sed 's/-v1/:v1/' > file.txt
-          cat file.txt | while IFS= read -r line; do
-            # Do something with each line                                                                                                                                                                     
-            name=$(echo "$line" | awk -F'[/:]' '{print $2}')
-            version=$(echo "$line" | awk -F':' '{print $NF}')
-
-            echo "Name: $name"
-            echo "Version: $version"
-
-            mkdir -p $name
-            echo "FROM $line" > $name/Dockerfile
-
-            echo "Build image"
-            docker build . --file $name/Dockerfile  --tag $name:$version
-
-            echo "Log in to registry"
-            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            
-            echo "Push image"
-            docker tag $name:$version ghcr.io/${{ github.repository_owner }}/$name-$version:$version
-            docker push ghcr.io/${{ github.repository_owner }}/$name-$version:$version
-          done
-
           cat file.txt | sed s/registry\.k8s\.io/ghcr.io/${{ github.repository_owner }}/
