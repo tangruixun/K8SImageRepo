@@ -34,4 +34,9 @@ jobs:
 
             echo "Name: $name"
             echo "Version: $version"
+
+            mkdir -p $name
+            echo "FROM $line" > $name/Dockerfile
           done
+
+          tree
