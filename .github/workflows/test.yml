@@ -30,4 +30,4 @@ jobs:
       - name: Run a multi-line script
         run: |
           curl -Ls "https://sbom.k8s.io/$(curl -Ls https://dl.k8s.io/release/stable.txt)/release" | grep "SPDXID: SPDXRef-Package-registry.k8s.io" |  grep -v sha256 | cut -d- -f3- | sed 's/-/\//' | sed 's/-v1/:v1/' > file.txt
-          cat file.txt | sed s/registry\.k8s\.io/ghcr.io/${{ github.repository_owner }}/
+          cat file.txt | sed 's/registry\.k8s\.io/ghcr.io\/${{ github.repository_owner }}/'
