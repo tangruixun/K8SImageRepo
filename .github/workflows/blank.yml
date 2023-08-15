@@ -37,6 +37,6 @@ jobs:
 
             mkdir -p $name
             echo "FROM $line" > $name/Dockerfile
-          done
 
-          tree
+            cat $name/Dockerfile
+          done
