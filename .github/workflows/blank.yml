@@ -38,5 +38,8 @@ jobs:
             mkdir -p $name
             echo "FROM $line" > $name/Dockerfile
 
-            cat $name/Dockerfile
+            docker build . --file $name/Dockerfile  --tag $name:$version
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            docker tag $name:$version ghcr.io/${{ github.repository_owner }}/$name-$version:$version
+            docker push ghcr.io/${{ github.repository_owner }}/$name-$version:$version
           done
