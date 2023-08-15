@@ -20,7 +20,7 @@ jobs:
       matrix:
         include:  
           - podname: kube-apiserver
-            version: latest
+            version: v1.27.4
     steps:
       - uses: actions/checkout@v3
 
