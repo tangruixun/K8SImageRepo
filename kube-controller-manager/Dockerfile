@@ -1,1 +1,0 @@
-FROM registry.k8s.io/kube-controller-manager:latest

@@ -1,1 +1,1 @@
-FROM registry.k8s.io/coredns/coredns:latest
+FROM registry.k8s.io/coredns/coredns:v1.28.0
