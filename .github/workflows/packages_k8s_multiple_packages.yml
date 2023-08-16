@@ -52,4 +52,4 @@ jobs:
             docker push ghcr.io/${{ github.repository_owner }}/$name-$version:$version
           done
 
-          cat file.txt | sed s/registry\.k8s\.io/ghcr.io/${{ github.repository_owner }}/
+          cat file.txt | sed 's/registry\.k8s\.io/ghcr.io\/${{ github.repository_owner }}/'
