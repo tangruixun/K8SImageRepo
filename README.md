@@ -7,7 +7,7 @@ The general command synax is:
     <Command> pull ghcr.io/tangruixun/<PackageName>-<Tag>:<Tag>
 	<Command> [-n k8s.io image] tag ghcr.io/tangruixun/<PackageName>-<Tag>:<Tag> registry.k8s.io/<PackageName>:<Tag>
 	
-e.g. If you need `k8s.gcr.io/pause:latest`:
+e.g. If you need `registry.k8s.io/pause:latest`:
 
 - Docker:
 
