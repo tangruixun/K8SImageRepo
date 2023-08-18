@@ -9,12 +9,12 @@ The general command synax is:
 	
 e.g. If you need `k8s.gcr.io/pause:latest`:
 
-Docker:
+- Docker:
 
     docker pull ghcr.io/tangruixun/pause-latest:latest
     docker tag ghcr.io/tangruixun/pause-latest:latest registry.k8s.io/pause:latest
 
-cricrl/ctr:
+- cricrl/ctr:
 
     crictl pull ghcr.io/tangruixun/pause-latest:latest
     ctr -n k8s.io image tag ghcr.io/tangruixun/pause-latest:latest registry.k8s.io/pause:latest
