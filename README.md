@@ -18,5 +18,7 @@ The general command synax is:
 
     <Command> pull ghcr.io/tangruixun/<PackageName>-<Tag>:<Tag>
 	<Command> [-n k8s.io image] tag ghcr.io/tangruixun/<PackageName>-<Tag>:<Tag> registry.k8s.io/<PackageName>:<Tag>
-
+	
 All current packages can be found at [here](https://github.com/users/tangruixun/packages?repo_name=K8SImageRepo).
+
+For very old installation, replace `registry.k8s.io` with `k8s.gcr.io`, please.
