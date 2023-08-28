@@ -26,6 +26,7 @@ jobs:
         run: |
           mkdir -p anyimage
           echo "FROM registry.k8s.io/${{ github.event.inputs.imagename }}:${{ github.event.inputs.tag }}" >> anyimage/Dockerfile
+          cat anyimage/Dockerfile
           docker build . --file anyimage/Dockerfile --tag ${{ github.event.inputs.imagename }}:${{ github.event.inputs.tag }}
 
       - name: Log in to registry
@@ -33,5 +34,5 @@ jobs:
 
       - name: Push image
         run: |
-          docker tag ${{ github.event.inputs.imagename }}:${{ github.event.inputs.tag }} ghcr.io/${{ github.repository_owner }}/${{ github.event.inputs.imagename }}:-${{ github.event.inputs.tag }}:${{ github.event.inputs.tag }}
-          docker push ghcr.io/${{ github.repository_owner }}/${{ github.event.inputs.imagename }}:-${{ github.event.inputs.tag }}:${{ github.event.inputs.tag }}
+          docker tag ${{ github.event.inputs.imagename }}:${{ github.event.inputs.tag }} ghcr.io/${{ github.repository_owner }}/${{ github.event.inputs.imagename }}-${{ github.event.inputs.tag }}:${{ github.event.inputs.tag }}
+          docker push ghcr.io/${{ github.repository_owner }}/${{ github.event.inputs.imagename }}-${{ github.event.inputs.tag }}:${{ github.event.inputs.tag }}
