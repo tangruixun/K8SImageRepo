@@ -1,0 +1,38 @@
+name: E2E-Packages
+  
+on:
+  #schedule:
+    # * is a special character in YAML so you have to quote this string
+    #- cron:  '15 * * * *'
+    #- cron:  '0 0 * * *'
+  workflow_dispatch:
+    inputs:
+      imagename:
+        required: true
+      tag:
+        required: true    
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build image
+        run: |
+          mkdir -p e2e-test-images
+          echo "FROM registry.k8s.io/e2e-test-images/${{ github.event.inputs.imagename }}:${{ github.event.inputs.tag }}" >> e2e-test-images/Dockerfile
+          cat e2e-test-images/Dockerfile
+          docker build . --file e2e-test-images/Dockerfile --tag ${{ github.event.inputs.imagename }}:${{ github.event.inputs.tag }}
+
+      - name: Log in to registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Push image
+        run: |
+          docker tag ${{ github.event.inputs.imagename }}:${{ github.event.inputs.tag }} ghcr.io/${{ github.repository_owner }}/${{ github.event.inputs.imagename }}-${{ github.event.inputs.tag }}:${{ github.event.inputs.tag }}
+          docker push ghcr.io/${{ github.repository_owner }}/${{ github.event.inputs.imagename }}-${{ github.event.inputs.tag }}:${{ github.event.inputs.tag }}
