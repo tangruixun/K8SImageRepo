@@ -1,0 +1,36 @@
+name: Any-Packages
+  
+on:
+  #schedule:
+    # * is a special character in YAML so you have to quote this string
+    #- cron:  '15 * * * *'
+    #- cron:  '0 0 * * *'
+  workflow_dispatch:
+    inputs:
+      tag:
+        required: true    
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build image
+        run: |
+          mkdir -p anyimage
+          echo "FROM registry.k8s.io/coredns/coredns:${{ github.event.inputs.tag }}" >> anyimage/Dockerfile
+          cat anyimage/Dockerfile
+          docker build . --file anyimage/Dockerfile --tag coredns:${{ github.event.inputs.tag }}
+
+      - name: Log in to registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Push image
+        run: |
+          docker tag coredns:${{ github.event.inputs.tag }} ghcr.io/${{ github.repository_owner }}/coredns-${{ github.event.inputs.tag }}:${{ github.event.inputs.tag }}
+          docker push ghcr.io/${{ github.repository_owner }}/coredns-${{ github.event.inputs.tag }}:${{ github.event.inputs.tag }}
