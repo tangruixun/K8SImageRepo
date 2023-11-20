@@ -1,4 +1,4 @@
-name: Any-Packages
+name: Coredns-Specific-Packages
   
 on:
   #schedule:
